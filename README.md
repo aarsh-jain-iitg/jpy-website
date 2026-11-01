@@ -55,3 +55,4 @@ City folders: `tokyo`, `fukuoka`, `nagasaki`, `beppu`, `kyoto`, `hamamatsu`, `ya
 | 2026-11-01 | v4: real photos for all 11 members (66 gallery photos + card portraits, HEIC converted, resized to ≤1600 px); text for 9 members; captions per photo; empty template fields hidden once a member's page is written |
 | 2026-11-01 | v3: narrowed to the 11 Kyushu A members; photos detected automatically (profile + gallery, any common extension); an album per place linked from the map stamps, the stop list and a new Photos section; a presentation viewer with PPTX/PDF download; disclaimer footer |
 | 2026-11-01 | v5: gallery photos shown whole in a masonry layout so faces are never cropped; captions moved below the photos; album covers and thumbnails no longer crop |
+| 2026-11-01 | v6: team order changed to Aarsh, Anmol, Siddhant, Adarsh, Aarya, then the rest |
