@@ -3,8 +3,7 @@
 ## What This Does
 A static website with a Japanese look and a light Indian accent, for the 11 members of Kyushu A:
 - **Team:** one button per member, each with their photo. Each button opens that person's own page.
-- **Journey map:** an animated, illustrated map of the route, with a hanko stamp for each city. Tap a stamp to open that city's photo album.
-- **Photos:** one album per place (Tokyo, Fukuoka, Nagasaki, Beppu, Kyoto, Hamamatsu, Yamanashi).
+- **Journey map:** an animated, illustrated map of the route, with a hanko stamp for each city.
 - **Presentation:** a slide viewer plus buttons to download the PPTX and PDF.
 
 ## Setup
@@ -17,24 +16,20 @@ Names must match exactly. `.jpg`, `.jpeg`, `.png` and `.webp` all work.
 |---|---|
 | Member photo (on the card and their page) | `images/<member>/profile.jpg` |
 | Member's 6 gallery photos | `images/<member>/1.jpg` … `6.jpg` |
-| City album | `images/places/<city>/1.jpg`, `2.jpg`, `3.jpg` … with **no gaps** in the numbering |
 | Slides for the viewer | `presentation/slides/Slide1.PNG`, `Slide2.PNG` … |
 | Deck to download | `presentation/MIRAI-Setu_KyushuA.pptx` (and `.pdf`) |
 
 Member folders: `aabhas-malpani`, `sparsh-shukla`, `aryan-nilesh-pansare`, `meghraj-sarjerao-shinde`, `adarsh-gyan-priyadarshi`, `siddhant-chauhan`, `aarya-shisode`, `nandani-nareshkumar-maheshwari`, `divya-gupta`, `anmol-singhal`, `aarsh-jain`.
 
-City folders: `tokyo`, `fukuoka`, `nagasaki`, `beppu`, `kyoto`, `hamamatsu`, `yamanashi`.
-
 **Slides:** in PowerPoint, choose File → Export → Change File Type → PNG → All Slides, then move the images into `presentation/slides/`.
 
-**Text:** edit `PEOPLE` (members), `PLACES` (album captions), `STOPS` (map) and `PRESENTATION` (file names) at the top of the `<script>` in `index.html`.
+**Text:** edit `PEOPLE` (members), `STOPS` (map) and `PRESENTATION` (file names) at the top of the `<script>` in `index.html`.
 
 ## File Map
 | Path | Purpose |
 |---|---|
 | `index.html` | The whole site: styles, data and pages |
 | `images/<member>/` | Each member's photos |
-| `images/places/<city>/` | Each city's album |
 | `presentation/` | The deck (`.pptx`/`.pdf`) and `slides/` images |
 
 ## Domain Assumptions
@@ -56,3 +51,6 @@ City folders: `tokyo`, `fukuoka`, `nagasaki`, `beppu`, `kyoto`, `hamamatsu`, `ya
 | 2026-11-01 | v3: narrowed to the 11 Kyushu A members; photos detected automatically (profile + gallery, any common extension); an album per place linked from the map stamps, the stop list and a new Photos section; a presentation viewer with PPTX/PDF download; disclaimer footer |
 | 2026-11-01 | v5: gallery photos shown whole in a masonry layout so faces are never cropped; captions moved below the photos; album covers and thumbnails no longer crop |
 | 2026-11-01 | v6: team order changed to Aarsh, Anmol, Siddhant, Adarsh, Aarya, then the rest |
+| 2026-11-01 | v7: browser tab icon added (the 九 hanko from the header logo) |
+| 2026-11-01 | v8: team cards keep names on one line (first + last name; full name stays on each person's page) |
+| 2026-11-01 | v9: place-wise photo albums removed (Photos section, map-stamp links, album viewer, `images/places/`) |
