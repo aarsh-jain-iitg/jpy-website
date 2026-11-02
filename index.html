@@ -166,7 +166,6 @@ section.block{padding:56px 0}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .chip{font-size:13px;padding:5px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line)}
 .chip b{color:var(--shu);font-weight:700;margin-right:4px}
-.quote{margin:18px 0 0;font-family:var(--f-display);font-size:20px;color:#3a3630;max-width:52ch;border-left:4px solid var(--sakura);padding-left:14px}
 .ph{color:var(--muted);font-style:italic;text-decoration:underline dashed var(--line);text-underline-offset:4px}
 
 .gallery{columns:3;column-gap:12px}
@@ -304,7 +303,7 @@ const PEOPLE = [
   {"name": "Nandani Nareshkumar Maheshwari", "kana": "ナンダニ・マヘシュワリ", "captions": ["Internship day", "Nagasaki Peace Park", "Kyushu University", "Team moment", "Best meal in Japan", "Shibuya Crossing"]},
   {"name": "Divya Gupta", "kana": "ディヴィヤ・グプタ", "captions": ["Internship day", "Nagasaki Peace Park", "Kyushu University", "Team moment", "Best meal in Japan", "Shibuya Crossing"]},
   /* Optional fields per person (leave out to show a placeholder):
-     college, internship, city, tagline, story,
+     college, internship, city (each shows as a tag once all scholars have it), story,
      takeaways:["…","…","…"], word:{k:"改善", r:"kaizen", m:"continuous improvement"},
      bridge:"One idea to bring India and Japan closer",
      captions:["…" x6] */
@@ -925,10 +924,11 @@ function personView(person){
   const caps = (p.captions || DEFAULT_CAPTIONS).map(c => tr(c, CAPTION_JA[c] || c));
   const take = p.takeaways || [tr("First thing I'm taking home…","持ち帰るもの その1…"),tr("Second thing…","その2…"),tr("Third thing…","その3…")];
   const w = p.word || {k:"改善", r:"kaizen", m:tr("continuous improvement (example: swap in your own word)","継続的な改善(例:自分の言葉に置き換えてください)")};
-  const filled = !!p.story;  /* once someone has written their page, hide empty template fields */
   const paras = t => String(t).split(/\n\n+/).map(x => `<p>${esc(x)}</p>`).join("");
-  const chip = (label, val, hint) => val ? `<span class="chip"><b>${label}</b>${esc(val)}</span>` : (filled ? "" : `<span class="chip"><b>${label}</b>${ph(hint)}</span>`);
-  const chips = chip(tr("From","所属"), p.college, tr("College · branch","大学・専攻")) + chip(tr("Interned at","インターン先"), p.internship, tr("Host company","受け入れ企業")) + chip(tr("Based in","拠点"), p.city, tr("Fukuoka / Oita / Saga","福岡 / 大分 / 佐賀"));
+  /* Tags match on every page: a personal tag only shows once every scholar has that field filled in. */
+  const chip = (label, val) => `<span class="chip"><b>${label}</b>${esc(val)}</span>`;
+  const personal = (label, key) => PEOPLE.every(q => q[key]) ? chip(label, p[key]) : "";
+  const chips = chip(tr("Programme","プログラム"), "MIRAI-Setu 2026") + chip(tr("Team","チーム"), tr("Kyushu A","九州A")) + personal(tr("From","所属"), "college") + personal(tr("Interned at","インターン先"), "internship") + personal(tr("Based in","拠点"), "city");
   /* In English the panel heading carries a small Japanese label; in Japanese it isn't needed. */
   const head = (jp, en, ja) => lang === "ja" ? `<h3>${ja}</h3>` : `<h3><small lang="ja">${jp}</small>${en}</h3>`;
   const kSize = w.k.length <= 3 ? 64 : w.k.length <= 5 ? 48 : w.k.length <= 7 ? 38 : 30;
@@ -945,8 +945,7 @@ function personView(person){
       <div>
         <h1>${esc(displayName(p))}</h1>
         <div class="kana" lang="${otherLang()}">${esc(tr(p.kana || "", p.name))}</div>
-        ${chips ? `<div class="chips">${chips}</div>` : ""}
-        ${p.tagline ? `<p class="quote">${esc(p.tagline)}</p>` : filled ? "" : `<p class="quote">${ph(tr("One line that sums up your month in Japan.","日本での1か月を一言で表すと…"))}</p>`}
+        <div class="chips">${chips}</div>
       </div>
     </section>
 

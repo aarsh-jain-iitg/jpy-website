@@ -59,3 +59,4 @@ Member folders: `aabhas-malpani`, `sparsh-shukla`, `aryan-nilesh-pansare`, `megh
 | 2026-11-01 | v8: team cards keep names on one line (first + last name; full name stays on each person's page) |
 | 2026-11-01 | v9: place-wise photo albums removed (Photos section, map-stamp links, album viewer, `images/places/`) |
 | 2026-11-02 | v10: EN / 日本語 toggle at the top; whole site translated into Japanese |
+| 2026-11-02 | v11: one-line tagline prompt removed; tags match on every member page (Programme and Team; college, internship and city show only once all 11 have them) |
