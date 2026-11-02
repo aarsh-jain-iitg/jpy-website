@@ -418,14 +418,16 @@ const TOTAL_DAYS = 29;
 /* =========================================================
    PRESENTATION: put the files in website/presentation/
    - the deck:   presentation/MIRAI-Setu_KyushuA.pptx (and .pdf if you have one)
-   - the slides: presentation/slides/Slide1.PNG, Slide2.PNG …
-     (PowerPoint: File → Export → Change File Type → PNG → All Slides
-      creates exactly these names; slide1.png or 1.jpg also work)
+   - the slides: presentation/slides/Slide1.jpg, Slide2.jpg …
+     slideCount says how many there are, so the page loads only the slide on show.
+     Remove slideCount to detect them instead (Slide1.PNG, slide1.png or 1.jpg
+     also work), which downloads every slide before showing the first.
    ========================================================= */
 const PRESENTATION = {
   pptx: "presentation/MIRAI-Setu_KyushuA.pptx",
   pdf:  "presentation/MIRAI-Setu_KyushuA.pdf",
-  slidesDir: "presentation/slides"
+  slidesDir: "presentation/slides",
+  slideCount: 23
 };
 
 const ACCENTS = ["var(--ai)","var(--shu)","var(--sakura)","var(--matcha)","var(--kin)"];
@@ -816,7 +818,9 @@ async function initDeck(){
   const cnt = document.getElementById("deck-count"), th = document.getElementById("deck-thumbs");
   const prev = document.getElementById("deck-prev"), next = document.getElementById("deck-next"), full = document.getElementById("deck-full");
   stage.innerHTML = `<div class="lb-empty">${tr("Loading slides…","スライドを読み込み中…")}</div>`;
-  const slides = await listSlides(PRESENTATION.slidesDir);
+  const slides = PRESENTATION.slideCount
+    ? Array.from({length:PRESENTATION.slideCount}, (_,n) => `${PRESENTATION.slidesDir}/Slide${n+1}.jpg`)
+    : await listSlides(PRESENTATION.slidesDir);
   let i = 0;
   const show = k => {
     i = (k + slides.length) % slides.length;
@@ -830,7 +834,7 @@ async function initDeck(){
     cnt.textContent = tr("No slides yet","スライドはまだありません");
     [prev,next,full].forEach(b => b.disabled = true);
   } else {
-    th.innerHTML = slides.map((u,n) => `<button type="button" aria-label="${tr("Slide","スライド")} ${n+1}"><img src="${u}" alt=""></button>`).join("");
+    th.innerHTML = slides.map((u,n) => `<button type="button" aria-label="${tr("Slide","スライド")} ${n+1}"><img src="${u}" alt="" loading="lazy"></button>`).join("");
     th.querySelectorAll("button").forEach((b,n) => b.onclick = () => show(n));
     prev.onclick = () => show(i-1); next.onclick = () => show(i+1);
     stage.addEventListener("keydown", e => {

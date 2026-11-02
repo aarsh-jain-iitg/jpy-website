@@ -17,12 +17,12 @@ Names must match exactly. `.jpg`, `.jpeg`, `.png` and `.webp` all work.
 |---|---|
 | Member photo (on the card and their page) | `images/<member>/profile.jpg` |
 | Member's 6 gallery photos | `images/<member>/1.jpg` … `6.jpg` |
-| Slides for the viewer | `presentation/slides/Slide1.PNG`, `Slide2.PNG` … |
+| Slides for the viewer | `presentation/slides/Slide1.jpg`, `Slide2.jpg` … (set `slideCount` in `PRESENTATION` to match) |
 | Deck to download | `presentation/MIRAI-Setu_KyushuA.pptx` (and `.pdf`) |
 
 Member folders: `aabhas-malpani`, `sparsh-shukla`, `aryan-nilesh-pansare`, `meghraj-sarjerao-shinde`, `adarsh-gyan-priyadarshi`, `siddhant-chauhan`, `aarya-shisode`, `nandani-nareshkumar-maheshwari`, `divya-gupta`, `anmol-singhal`, `aarsh-jain`.
 
-**Slides:** in PowerPoint, choose File → Export → Change File Type → PNG → All Slides, then move the images into `presentation/slides/`.
+**Slides:** the current 23 images were rendered from the deck's PDF and cropped to the slide. To update them, export the new deck's slides as images named `Slide1.jpg`, `Slide2.jpg` … into `presentation/slides/`.
 
 **Text:** edit `PEOPLE` (members), `STOPS` (map) and `PRESENTATION` (file names) at the top of the `<script>` in `index.html`.
 
@@ -60,3 +60,4 @@ Member folders: `aabhas-malpani`, `sparsh-shukla`, `aryan-nilesh-pansare`, `megh
 | 2026-11-01 | v9: place-wise photo albums removed (Photos section, map-stamp links, album viewer, `images/places/`) |
 | 2026-11-02 | v10: EN / 日本語 toggle at the top; whole site translated into Japanese |
 | 2026-11-02 | v11: one-line tagline prompt removed; tags match on every member page (Programme and Team; college, internship and city show only once all 11 have them) |
+| 2026-11-02 | v12: final deck added (PPTX, PDF and 23 slide images); the viewer loads only the slide on show |
