@@ -5,6 +5,7 @@ A static website with a Japanese look and a light Indian accent, for the 11 memb
 - **Team:** one button per member, each with their photo. Each button opens that person's own page.
 - **Journey map:** an animated, illustrated map of the route, with a hanko stamp for each city.
 - **Presentation:** a slide viewer plus buttons to download the PPTX and PDF.
+- **Language:** an EN / 日本語 button at the top switches the whole site and remembers the choice.
 
 ## Setup
 None. Open `index.html` in Chrome or Edge. No server and no internet needed, apart from the web fonts.
@@ -25,6 +26,8 @@ Member folders: `aabhas-malpani`, `sparsh-shukla`, `aryan-nilesh-pansare`, `megh
 
 **Text:** edit `PEOPLE` (members), `STOPS` (map) and `PRESENTATION` (file names) at the top of the `<script>` in `index.html`.
 
+**Japanese text:** members' text is in `PEOPLE_JA`, photo captions in `CAPTION_JA`, map stops in the `dj` and `wj` fields of `STOPS`, and everything else sits next to its English as `tr("English","日本語")`. Anything without Japanese shows in English.
+
 ## File Map
 | Path | Purpose |
 |---|---|
@@ -36,6 +39,7 @@ Member folders: `aabhas-malpani`, `sparsh-shukla`, `aryan-nilesh-pansare`, `megh
 - The itinerary comes from the AFS welcome letter (Kyushu group). Planes appear only on the two legs the itinerary says were flights.
 - The map is drawn from hand-placed coastline points, not survey data.
 - The katakana names are first guesses. Ask each member to check theirs.
+- The Japanese text is a draft translation that no native speaker has reviewed. It includes members' personal stories, so have a Japanese speaker and each member check it.
 - The footer disclaimer follows the group's rule: the site is not an official AFS or Ministry website. Get each person's permission before publishing their name, face or photos.
 - Member folders left over from v1–v2 (the other Kyushu scholars) are no longer used and can be deleted.
 - Card photos (`profile.jpg`) are square crops from one of each member's own gallery photos. To use a different one, replace `profile.jpg`.
@@ -54,3 +58,4 @@ Member folders: `aabhas-malpani`, `sparsh-shukla`, `aryan-nilesh-pansare`, `megh
 | 2026-11-01 | v7: browser tab icon added (the 九 hanko from the header logo) |
 | 2026-11-01 | v8: team cards keep names on one line (first + last name; full name stays on each person's page) |
 | 2026-11-01 | v9: place-wise photo albums removed (Photos section, map-stamp links, album viewer, `images/places/`) |
+| 2026-11-02 | v10: EN / 日本語 toggle at the top; whole site translated into Japanese |

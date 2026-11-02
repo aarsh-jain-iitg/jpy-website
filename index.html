@@ -52,6 +52,11 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0
 .bar nav{display:flex;gap:4px;flex-wrap:wrap}
 .bar nav a{text-decoration:none;padding:6px 12px;border-radius:999px;font-size:14px;font-weight:500}
 .bar nav a:hover{background:var(--washi-2)}
+.lang-toggle{display:inline-flex;align-self:center;margin-left:6px;padding:2px;border:1.5px solid var(--sumi);border-radius:999px;background:var(--card);color:var(--sumi);font:inherit;font-size:13px;font-weight:700;line-height:1;cursor:pointer}
+.lang-toggle:hover{border-color:var(--shu)}
+.lang-toggle span{padding:6px 10px;border-radius:999px}
+html:not([lang="ja"]) .lang-toggle [data-l="en"],html[lang="ja"] .lang-toggle [data-l="ja"]{background:var(--sumi);color:var(--washi)}
+html[lang="ja"] body{word-break:auto-phrase;line-break:strict}
 
 /* ---------- hero ---------- */
 .hero-wrap{position:relative;overflow:hidden}
@@ -199,6 +204,7 @@ footer .thanks .hi{font-family:var(--f-deva);font-size:18px;opacity:.75;margin-l
 
 /* ---------- v3 additions ---------- */
 .card{container-type:inline-size}
+html[lang="ja"] .card .nm{font-size:min(16px,7.6cqi)}
 .card .medal{width:128px;height:128px}
 .card .medal .face{width:88px;height:88px;font-size:26px}
 .face img{width:100%;height:100%;object-fit:cover}
@@ -257,11 +263,12 @@ footer .thanks .hi{font-family:var(--f-deva);font-size:18px;opacity:.75;margin-l
 <div class="lintel" aria-hidden="true"></div>
 <div class="wrap">
   <div class="bar">
-    <a class="brand" href="#top"><span class="hanko">九</span>MIRAI-Setu 2026 · Kyushu A</a>
+    <a class="brand" href="#top"><span class="hanko">九</span><span data-ja="MIRAI-Setu 2026 · 九州A">MIRAI-Setu 2026 · Kyushu A</span></a>
     <nav aria-label="Main">
-      <a href="#team">Team</a>
-      <a href="#journey">Journey map</a>
-      <a href="#presentation">Presentation</a>
+      <a href="#team" data-ja="チーム">Team</a>
+      <a href="#journey" data-ja="旅の地図">Journey map</a>
+      <a href="#presentation" data-ja="発表">Presentation</a>
+      <button class="lang-toggle" id="lang-toggle" type="button"><span data-l="en">EN</span><span data-l="ja" lang="ja">日本語</span></button>
     </nav>
   </div>
 </div>
@@ -270,8 +277,8 @@ footer .thanks .hi{font-family:var(--f-deva);font-size:18px;opacity:.75;margin-l
 <footer>
   <div class="wrap">
     <div class="thanks">ありがとうございました<span class="hi">धन्यवाद</span></div>
-    <div>MIRAI-Setu 2026 · Kyushu A · Oct 7 – Nov 4, 2026</div>
-    <div class="disclaimer">Created by MIRAI-Setu 2026 participants. Not an official AFS or Ministry website.</div>
+    <div data-ja="MIRAI-Setu 2026 · 九州A · 2026年10月7日〜11月4日">MIRAI-Setu 2026 · Kyushu A · Oct 7 – Nov 4, 2026</div>
+    <div class="disclaimer" data-ja="MIRAI-Setu 2026の参加者が作成したサイトです。AFSおよび省庁の公式サイトではありません。">Created by MIRAI-Setu 2026 participants. Not an official AFS or Ministry website.</div>
   </div>
 </footer>
 
@@ -303,19 +310,98 @@ const PEOPLE = [
      captions:["…" x6] */
 ];
 
+/* =========================================================
+   JAPANESE TEXT for each scholar, keyed by <slug>. Same fields as PEOPLE.
+   Anything left out here shows in English.
+   ========================================================= */
+const PEOPLE_JA = {
+  "aarsh-jain": {
+    college: "インド工科大学グワハティ校 · 機械工学",
+    story: "友人4人と「花の島」へ出かけたことが、今回の旅で一番の思い出です。2時間の滞在の予定が、気がつけば5時間以上になっていました。バスに乗る代わりにその場で予定を変え、桜並木の長い道を歩くことにしました。疲れましたが歩ききり、途中で(まだ熟していない)みかんを木から取って食べたりもしました。浜辺に座って石を集め、写真を撮り、道中で良い友人もできました。",
+    takeaways: ["細部へのこだわり。インドでは発表の直前にPPTを変えるなど、土壇場で臨機応変に対応することがよくあります。日本ではすべてが計画されています。", "礼儀正しさ。道を尋ねると、指で示すだけでなく、目的地まで一緒に歩いて案内してくれました。", "規律と時間厳守。5時の約束なら4時50分には到着します。5時10分や5時半に着くのは、ここでは失礼にあたります。"],
+    word: {m: "「問題ありません」という意味。発音しやすく、ほとんどどんな場面でも使えます。"},
+    bridge: "この経験を後輩や友人、先輩に伝え、日本に来るきっかけをつくりたいです。インドでは欧米の文化に触れる機会がほとんどです。日本の大学や企業の仕組み、採用の方法、文化を学んだことで、私にとって東洋への扉が開きました。私の架け橋アイデアは、より多くの人に日本を知ってもらう手助けをすることです。"
+  },
+  "anmol-singhal": {
+    story: "福岡を一人で散策し、コンビニを巡っていろいろな日本のアイスクリームを試したことです。",
+    takeaways: ["日本の文化の中で体感した、規律、忍耐、時間厳守という価値観。"],
+    word: {m: "感謝の言葉。感謝と敬意を表す、シンプルな表現です。"},
+    bridge: "手頃な価格で受けやすい日本語講座をインドで提供し、文化交流やスキル開発、インドと日本の間の人材交流の強化を促すこと。"
+  },
+  "siddhant-chauhan": {
+    story: "MIRAI-Setuインターンシップで一番の思い出は、美しい有明海の海岸沿いを観光したことです。佐賀県の祐徳稲荷神社を訪れたことも、忘れられない経験になりました。こうした場所を巡ったことで、インターンシップの旅がいっそう思い出深いものになりました。",
+    takeaways: ["時間厳守と規律という価値観。これからの人生でもずっと大切にしていきたいです。", "日本の仕事文化から学んだ、何事にも正確さ、細部へのこだわり、ひたむきさをもって取り組む姿勢。"],
+    word: {m: "「いろいろとありがとうございました」という感謝の言葉。"},
+    bridge: "両国の学生が協力し、イノベーションを共有し、現実の課題の解決策を一緒に考えられる、継続的なプラットフォームをつくること。"
+  },
+  "adarsh-gyan-priyadarshi": {
+    story: "日本の美しい田園風景を巡り、仲間と忘れられない時間を過ごし、人々の温かさに触れたことで、日本が第二の故郷のように感じられました。",
+    takeaways: ["貴重な技術的知識と仕事に関する知見。", "生涯続く友情と、文化を越えたつながり。", "将来、日本で学び、働くことへの意欲。"],
+    word: {m: "継続的な改善。毎日学び、成長し、より良くなろうとする心構えです。"},
+    bridge: "言語交流、共同プロジェクト、研究の機会、インターンシップを通じて、大学、社会人、産業界をつなぐ、活発な日印学生ネットワークをつくること。"
+  },
+  "aarya-shisode": {
+    story: "一番の思い出は、企業訪問と日本の専門家の方々との対話です。観光客の視点を超えた日本を見ることができました。中山鉄工所を訪問して実際の産業システムを見学したことで、教室での学びと実践を結びつけることができ、文化を越えた有意義なつながりも築けました。",
+    takeaways: ["日本の文化、仕事への姿勢、細部へのこだわりに対する新しい視点。", "工場見学、インターンシップ、大学、技術的な議論から得た貴重な学び。", "友情、仕事上のつながり、そして日印関係へのより深い理解という、長く続く絆。"],
+    word: {m: "継続的な改善。学び方、働き方、問題の解き方を、小さく着実に良くしていくこと。日本の技術、保守、日常生活への向き合い方に、この考え方を見ました。"},
+    bridgeTitle: "日印学生協働ネットワーク",
+    bridge: "共同プロジェクト、オンライン文化交流、業界メンターシップ、インターンシップの機会を通じて、インドと日本の学生を一年中つなぐプラットフォーム。短期プログラムの経験を、長く続く友情、共同の学び、将来の仕事での協力へとつなげます。"
+  },
+  "aabhas-malpani": {
+    story: "さまざまな大学や研究室を訪問し、研究者や学生と交流して、日本の先進的な研究環境を間近に見られたことです。",
+    takeaways: ["素晴らしい思い出と新しい友情", "貴重な仕事上の知見と異文化体験", "学業と研究の道に向けた新たな刺激"],
+    word: {m: "感謝の言葉。シンプルですが深い意味があり、日本の旅を通じて出会った優しさ、温かさ、おもてなしの心を表しています。"},
+    bridge: "学術協力や知識の共有を促し、新興技術分野での進学や共同研究の機会を探ることで、インドと日本の研究のつながりを強めること。"
+  },
+  "sparsh-shukla": {
+    story: "日本企業で働いた8日間、仕事の文化を体験し、日本の美しい文化遺産を巡った日々は、本当に忘れられません。産業界の実際の課題に取り組むことから、史跡やお寺を訪れて地域の伝統に触れることまで、どの瞬間にも新しい学びがありました。人々の温かさ、築いた友情、つくった思い出のおかげで、この8日間は私の旅の特別な一部になりました。",
+    takeaways: ["貴重な技術的知識、産業現場での経験、日本の仕事文化への理解。", "美しい思い出、生涯続く友情、文化を越えた有意義なつながり。", "日本での将来の学業、研究、キャリアを探りたいという意欲。", "協力、規律、イノベーション、継続的な学びへのより深い理解。"],
+    word: {m: "シンプルで覚えやすい言葉で、新しい味との出会いから友人との食事まで、日本での毎日に欠かせない言葉になりました。"},
+    bridgeTitle: "日印学生・イノベーションネットワーク",
+    bridge: "共同プロジェクト、学生交流プログラム、語学学習、研究の機会、インターンシップを通じて、大学、学生、研究者、社会人、産業界をつなぎ、両国の間に長期的な関係を築いてイノベーションを促すこと。"
+  },
+  "aryan-nilesh-pansare": {
+    story: "別府の海地獄を訪れ、仲間とAPU(立命館アジア太平洋大学)を見学したことは、忘れられない経験です。霧に包まれた景色と地面から立ちのぼる湯気は息をのむほどで、日本の火山地形の魅力と、自然の美しさと力の繊細な関係を感じました。",
+    takeaways: ["敬意と共感:立場や境遇にかかわらず、誰に対しても優しさと敬意をもって接すること。", "規律と責任:時間を守り、計画的に行動し、話しかけやすくあり、自分の責任を全うすること。", "協働の精神:日本の文化、チームワーク、有意義な関係を築くことの大切さへのより深い理解。"],
+    word: {m: "忍耐強く、ひたむきに励むこと。意味のある成果は、地道な積み重ね、忍耐、献身から生まれます。小さな一歩でも進み続けようと思わせてくれる言葉です。"},
+    bridgeTitle: "キャリアを通じて架け橋になる",
+    bridge: "私は、インド人学生として得た視点と経験を生かしながら、日本でキャリアを築きたいと考えています。技術的なスキルで日本の職場に貢献し、一緒に働く人々に自分の文化を伝え、日本に関心のあるインドの学生たちの力にもなりたいです。\n\n私の目標:仕事を通じた一つひとつの関係を大切にして、インドと日本の間に有意義なつながりを築くことです。"
+  },
+  "meghraj-sarjerao-shinde": {
+    story: "プログラム全体で一番良かったのは、MIZ Co., Ltd.での2週間のインターンシップです。初めてのインターンシップで、ソフトウェアエンジニアリングと問題解決のスキルを初めて実践で生かすことができました。社員の皆さんは家族のように迎えてくださり、本当に素晴らしい2週間でした。",
+    takeaways: ["貴重な技術的知識", "産業現場での経験と日本の仕事文化への理解", "ここで働く人々の正確で緻密な仕事ぶり", "日本の文化に関する知識と、日本料理の味"],
+    word: {m: "継続的な改善。どんな仕事でも、改善し続けることが一番の目標だと思い出させてくれます。"},
+    bridge: "日本での経験と学びを、インドの友人、家族、地域の人々に伝えたいと思います。日本の仕事文化に刺激を受け、日本でのキャリアや日本の大学での進学も考えるようになりました。また、自分の経験や文化面での学び、日本についての気づきを紹介するSNSページを始め、日本の学業、仕事、文化の機会に目を向ける人を増やしたいです。"
+  }
+};
+/* Japanese for each photo caption. A caption missing here shows in English. */
+const CAPTION_JA = {
+  "Best meal in Japan":"日本で一番おいしかった食事", "Free-day adventure":"自由行動日の冒険", "Campus visit":"キャンパス訪問",
+  "Meeting our hosts":"受け入れ先の皆さんとの出会い", "Day trip to the flower island":"花の島への日帰り旅行", "Yukata night in Hamamatsu":"浜松の浴衣の夜",
+  "City lights":"街の灯り", "Asakusa, Tokyo":"東京・浅草", "Under the glass dome":"ガラスドームの下で", "Nagasaki Peace Park":"長崎平和公園",
+  "Team dinner":"チームでの夕食", "Ready for the day":"一日の始まり", "Shrine visit":"神社参拝", "Waterfall trip":"滝への小旅行",
+  "Rainy day on campus":"雨のキャンパス", "Dotonbori, Osaka":"大阪・道頓堀", "Friends at the shrine":"神社で友人と", "Library visit":"図書館見学",
+  "Kyoto University":"京都大学", "Mountain roads":"山道", "Osaka Castle":"大阪城", "Night in the city":"夜の街", "Swing by the sea":"海辺のブランコ",
+  "Cosmos flower field":"コスモス畑", "A message of peace":"平和へのメッセージ", "Torii gates":"鳥居", "Company visit":"企業訪問", "Making friends":"友だちづくり",
+  "Mount Fuji":"富士山", "With the team":"チームと一緒に", "Campus festival":"学園祭", "Internship certificate":"インターンシップ修了証",
+  "Internship day":"インターンシップの一日", "On the beach":"浜辺で", "With our hosts":"受け入れ先の皆さんと", "Museum visit":"博物館見学",
+  "Internship welcome":"インターンシップの歓迎会", "Autumn colours":"紅葉", "Kyushu University":"九州大学", "By the sea with friends":"友人と海辺で",
+  "Bento lunch":"お弁当のランチ", "Tokyo Skytree":"東京スカイツリー", "Team moment":"チームのひととき", "Shibuya Crossing":"渋谷スクランブル交差点"
+};
+
 const DEFAULT_CAPTIONS = ["Internship day","Nagasaki Peace Park","Kyushu University","Team moment","Best meal in Japan","Free-day adventure"];
 
 /* Route stops (Kyushu group). lon/lat place each hanko on the map. */
 const STOPS = [
-  {d:"Oct 7–10",  day:1,  pl:"Tokyo",     k:"東京", lon:139.74, lat:35.63, w:"Landed at Haneda. Orientation, University of Tokyo, TCS Japan, JAXA, VeBuIn.", lbl:[34,-30], tag:[34,-62,"middle"]},
-  {d:"Oct 12–22", day:6,  pl:"Fukuoka",   k:"福岡", lon:130.40, lat:33.59, w:"Flew to Kyushu. Eight-day internships across Fukuoka, Oita and Saga.", lbl:[-8,-62], tag:[-34,-58,"end"]},
-  {d:"Oct 17",    day:11, pl:"Nagasaki",  k:"長崎", lon:129.87, lat:32.75, w:"Peace study day in Nagasaki.", lbl:[-26,50], tag:[-26,96,"middle"]},
-  {d:"Oct 23",    day:17, pl:"Fukuoka",   k:"福岡", lon:130.40, lat:33.59, w:"Kyushu University. Courtesy visit to the Consulate-General of India.", lbl:null},
-  {d:"Oct 24",    day:18, pl:"Beppu",     k:"別府", lon:131.49, lat:33.28, w:"Ritsumeikan Asia Pacific University. Evening flight from Oita to Itami.", lbl:[6,56], tag:[32,62,"start"]},
-  {d:"Oct 26–28", day:20, pl:"Kyoto",     k:"京都", lon:135.77, lat:35.01, w:"Three days at Kyoto University, Yoshida and Katsura campuses.", lbl:[-6,-56], tag:[-30,-52,"end"]},
-  {d:"Oct 29–30", day:23, pl:"Hamamatsu", k:"浜松", lon:137.73, lat:34.71, w:"Shizuoka University, Suzuki, Hamamatsu City Hall, Alfred Co.", lbl:[-10,58], tag:[-36,62,"end"]},
-  {d:"Oct 31",    day:25, pl:"Yamanashi", k:"山梨", lon:138.52, lat:35.61, w:"Yonekurayama power storage research site. University of Yamanashi.", lbl:[-36,-46], tag:[-62,-42,"end"]},
-  {d:"Nov 2",     day:27, pl:"Tokyo",     k:"東京", lon:139.74, lat:35.63, w:"Embassy of India. Wrap-up session and farewell party.", lbl:null}
+  {d:"Oct 7–10", dj:"10月7日〜10日",  day:1,  pl:"Tokyo",     k:"東京", lon:139.74, lat:35.63, w:"Landed at Haneda. Orientation, University of Tokyo, TCS Japan, JAXA, VeBuIn.", wj:"羽田空港に到着。オリエンテーション、東京大学、TCSジャパン、JAXA、VeBuIn。", lbl:[34,-30], tag:[34,-62,"middle"]},
+  {d:"Oct 12–22", dj:"10月12日〜22日", day:6,  pl:"Fukuoka",   k:"福岡", lon:130.40, lat:33.59, w:"Flew to Kyushu. Eight-day internships across Fukuoka, Oita and Saga.", wj:"九州へ空路で移動。福岡、大分、佐賀で8日間のインターンシップ。", lbl:[-8,-62], tag:[-34,-58,"end"]},
+  {d:"Oct 17", dj:"10月17日",    day:11, pl:"Nagasaki",  k:"長崎", lon:129.87, lat:32.75, w:"Peace study day in Nagasaki.", wj:"長崎で平和学習の一日。", lbl:[-26,50], tag:[-26,96,"middle"]},
+  {d:"Oct 23", dj:"10月23日",    day:17, pl:"Fukuoka",   k:"福岡", lon:130.40, lat:33.59, w:"Kyushu University. Courtesy visit to the Consulate-General of India.", wj:"九州大学。インド総領事館を表敬訪問。", lbl:null},
+  {d:"Oct 24", dj:"10月24日",    day:18, pl:"Beppu",     k:"別府", lon:131.49, lat:33.28, w:"Ritsumeikan Asia Pacific University. Evening flight from Oita to Itami.", wj:"立命館アジア太平洋大学。夕方、大分から伊丹へ空路で移動。", lbl:[6,56], tag:[32,62,"start"]},
+  {d:"Oct 26–28", dj:"10月26日〜28日", day:20, pl:"Kyoto",     k:"京都", lon:135.77, lat:35.01, w:"Three days at Kyoto University, Yoshida and Katsura campuses.", wj:"京都大学の吉田キャンパスと桂キャンパスで3日間。", lbl:[-6,-56], tag:[-30,-52,"end"]},
+  {d:"Oct 29–30", dj:"10月29日〜30日", day:23, pl:"Hamamatsu", k:"浜松", lon:137.73, lat:34.71, w:"Shizuoka University, Suzuki, Hamamatsu City Hall, Alfred Co.", wj:"静岡大学、スズキ、浜松市役所、Alfred Co.", lbl:[-10,58], tag:[-36,62,"end"]},
+  {d:"Oct 31", dj:"10月31日",    day:25, pl:"Yamanashi", k:"山梨", lon:138.52, lat:35.61, w:"Yonekurayama power storage research site. University of Yamanashi.", wj:"米倉山の電力貯蔵研究施設。山梨大学。", lbl:[-36,-46], tag:[-62,-42,"end"]},
+  {d:"Nov 2", dj:"11月2日",     day:27, pl:"Tokyo",     k:"東京", lon:139.74, lat:35.63, w:"Embassy of India. Wrap-up session and farewell party.", wj:"インド大使館。総括セッションとお別れパーティー。", lbl:null}
 ];
 /* Legs between consecutive stops: bend = how much the line curves; fly = drawn with a plane. */
 const LEGS = [
@@ -344,6 +430,18 @@ const PRESENTATION = {
 };
 
 const ACCENTS = ["var(--ai)","var(--shu)","var(--sakura)","var(--matcha)","var(--kin)"];
+
+/* ---------- language: tr("English","日本語") picks the text for the current language ---------- */
+let lang = "en";
+try { if (localStorage.getItem("lang") === "ja") lang = "ja"; } catch(e){}
+const tr = (en, ja) => lang === "ja" ? ja : en;
+/* A scholar with their Japanese text laid over the English. */
+const loc = p => {
+  const ja = lang === "ja" && PEOPLE_JA[p.slug];
+  return ja ? {...p, ...ja, word: p.word && {...p.word, ...ja.word}} : p;
+};
+const displayName = p => tr(p.name, p.kana || p.name);
+const otherLang = () => tr("ja", "en");
 
 /* ---------- helpers ---------- */
 const slugify = s => s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -374,7 +472,7 @@ function blossom(x, y, s){
 function emblem(){
   const waves = [310,326,342,358,374].map((y,i) =>
     `<path d="M0 ${y} ${Array.from({length:9},(_,k)=>`q 25 ${i%2?-10:-12} 50 0`).join(" ")}" fill="none" stroke="#F5F0E6" stroke-width="2.2" opacity=".6" transform="translate(${i%2?-25:0} 0)"/>`).join("");
-  return `<svg class="emblem" viewBox="0 0 400 400" role="img" aria-label="Mount Fuji under a red sun, with a vermilion torii standing in the waves and a sakura branch">
+  return `<svg class="emblem" viewBox="0 0 400 400" role="img" aria-label="${tr("Mount Fuji under a red sun, with a vermilion torii standing in the waves and a sakura branch","赤い太陽の下の富士山、波間に立つ朱色の鳥居、桜の枝")}">
     <defs><clipPath id="disc"><circle cx="200" cy="200" r="168"/></clipPath></defs>
     <circle cx="200" cy="200" r="168" fill="#EDE4D3"/>
     <g clip-path="url(#disc)">
@@ -454,7 +552,7 @@ function mapSVG(){
   const legs = LEGS.map((L,i) => legPath(STOPS[i], STOPS[i+1], L.bend));
   const uniq = STOPS.map((s,i) => [s,i]).filter(([s]) => s.lbl);
   const [fx,fy] = proj(138.73, 35.36);
-  return `<svg viewBox="0 0 ${MAP.w} ${MAP.h}" role="img" aria-label="Illustrated map of Japan showing the Kyushu team's route: Tokyo, Fukuoka, Nagasaki, Beppu, Kyoto, Hamamatsu, Yamanashi and back to Tokyo">
+  return `<svg viewBox="0 0 ${MAP.w} ${MAP.h}" role="img" aria-label="${tr("Illustrated map of Japan showing the Kyushu team's route: Tokyo, Fukuoka, Nagasaki, Beppu, Kyoto, Hamamatsu, Yamanashi and back to Tokyo","九州チームのルートを示す日本地図:東京、福岡、長崎、別府、京都、浜松、山梨を経て東京へ")}">
     <defs>
       <pattern id="sea" width="48" height="24" patternUnits="userSpaceOnUse">
         <path d="M0 24 a24 24 0 0 1 48 0 M8 24 a16 16 0 0 1 32 0 M16 24 a8 8 0 0 1 16 0 M-24 12 a24 24 0 0 1 48 0 M24 12 a24 24 0 0 1 48 0" fill="none" stroke="#B9C6D3" stroke-width="1"/>
@@ -478,7 +576,7 @@ function mapSVG(){
     ${legs.map((d,i) => `<path class="route-live${LEGS[i].fly?" fly":""}" data-leg="${i}" d="${d}"/>`).join("")}
     ${uniq.map(([s]) => { const [x,y] = proj(s.lon,s.lat); return `<circle class="dot" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6"/>`; }).join("")}
     ${uniq.map(([s]) => { const [x,y] = proj(s.lon,s.lat), [tx,ty,anc] = s.tag;
-        return `<text class="city-lbl" x="${(x+tx).toFixed(1)}" y="${(y+ty).toFixed(1)}" text-anchor="${anc}">${s.pl}</text>`; }).join("")}
+        return `<text class="city-lbl" x="${(x+tx).toFixed(1)}" y="${(y+ty).toFixed(1)}" text-anchor="${anc}">${tr(s.pl,s.k)}</text>`; }).join("")}
     ${uniq.map(([s,i]) => hankoSVG(i,s)).join("")}
     <g id="traveller" aria-hidden="true">
       <circle id="tv-glow" r="16" fill="#C23B2E" opacity=".18"/>
@@ -494,8 +592,8 @@ function journeySection(){
   <section class="block" id="journey">
     <div class="wrap">
       <div class="sec-head">
-        <h2><span class="hanko">旅程</span>Our journey across Japan</h2>
-        <p>Press play to follow the route. Every city we reached gets its hanko stamp, like the eki stamps at Japanese stations.</p>
+        <h2><span class="hanko">旅程</span>${tr("Our journey across Japan","日本を巡る旅")}</h2>
+        <p>${tr("Press play to follow the route. Every city we reached gets its hanko stamp, like the eki stamps at Japanese stations.","再生ボタンを押すとルートをたどれます。訪れた都市には、日本の駅にある「駅スタンプ」のように印が押されていきます。")}</p>
       </div>
       <div class="map-layout">
         <div>
@@ -503,23 +601,23 @@ function journeySection(){
             ${mapSVG()}
             <div class="map-hud">
               <div class="now" id="now">
-                <div class="d">Oct 7 – Nov 4</div>
-                <div class="pl">7 cities<span>8 prefectures</span></div>
-                <div class="w">Tokyo to Kyushu and back by way of Kyoto, Hamamatsu and Yamanashi.</div>
+                <div class="d">${tr("Oct 7 – Nov 4","10月7日〜11月4日")}</div>
+                <div class="pl">${tr("7 cities","7都市")}<span>${tr("8 prefectures","8都府県")}</span></div>
+                <div class="w">${tr("Tokyo to Kyushu and back by way of Kyoto, Hamamatsu and Yamanashi.","東京から九州へ、そして京都、浜松、山梨を経て東京へ戻る旅。")}</div>
               </div>
-              <div class="daybox"><span>Day</span><b id="day">${TOTAL_DAYS}</b><span>of ${TOTAL_DAYS}</span></div>
+              <div class="daybox"><span>${tr("Day","日目")}</span><b id="day">${TOTAL_DAYS}</b><span>${tr(`of ${TOTAL_DAYS}`,`全${TOTAL_DAYS}日`)}</span></div>
             </div>
             <div class="progress"><i id="prog"></i></div>
           </div>
           <div class="map-controls">
-            <button class="btn primary" id="play" type="button">▶ Play our journey</button>
-            <small>Or pick a stop from the list to jump there.</small>
+            <button class="btn primary" id="play" type="button">${tr("▶ Play our journey","▶ 旅を再生")}</button>
+            <small>${tr("Or pick a stop from the list to jump there.","リストから立ち寄り先を選んで移動することもできます。")}</small>
           </div>
         </div>
         <ol class="stops" id="stops">
           ${STOPS.map((s,i) => `<li class="done"><button class="jump" type="button" data-i="${i}">
             <span class="k" lang="ja">${s.k}</span>
-            <span><span class="t">${s.d}</span><br><span class="p">${s.pl}</span><br><span class="w">${esc(s.w)}</span></span>
+            <span><span class="t">${tr(s.d,s.dj)}</span><br><span class="p">${tr(s.pl,s.k)}</span><br><span class="w">${esc(tr(s.w,s.wj))}</span></span>
           </button></li>`).join("")}
         </ol>
       </div>
@@ -529,19 +627,19 @@ function journeySection(){
   <section class="block" id="presentation" style="padding-top:8px">
     <div class="wrap">
       <div class="sec-head">
-        <h2><span class="hanko">発表</span>Our final presentation</h2>
-        <p>Wrap-up session, Mon 2 Nov 2026, Tokyo. Flip through the slides here or download the deck.</p>
+        <h2><span class="hanko">発表</span>${tr("Our final presentation","最終発表")}</h2>
+        <p>${tr("Wrap-up session, Mon 2 Nov 2026, Tokyo. Flip through the slides here or download the deck.","2026年11月2日(月)、東京での総括セッション。ここでスライドをご覧いただくか、資料をダウンロードできます。")}</p>
       </div>
       <div class="deck">
-        <div class="deck-stage" id="deck-stage" tabindex="0" aria-label="Slide viewer. Use the arrow keys to change slides."></div>
+        <div class="deck-stage" id="deck-stage" tabindex="0" aria-label="${tr("Slide viewer. Use the arrow keys to change slides.","スライドビューアー。矢印キーでスライドを切り替えられます。")}"></div>
         <div class="deck-bar">
-          <button class="icon-btn" id="deck-prev" type="button" aria-label="Previous slide">←</button>
+          <button class="icon-btn" id="deck-prev" type="button" aria-label="${tr("Previous slide","前のスライド")}">←</button>
           <span class="count" id="deck-count">–</span>
-          <button class="icon-btn" id="deck-next" type="button" aria-label="Next slide">→</button>
-          <button class="icon-btn" id="deck-full" type="button">Full screen</button>
+          <button class="icon-btn" id="deck-next" type="button" aria-label="${tr("Next slide","次のスライド")}">→</button>
+          <button class="icon-btn" id="deck-full" type="button">${tr("Full screen","全画面表示")}</button>
           <span class="spacer"></span>
-          <a class="btn primary dl" id="dl-pptx" href="${PRESENTATION.pptx}" download>Download PPTX</a>
-          ${PRESENTATION.pdf ? `<a class="btn ghost dl" id="dl-pdf" href="${PRESENTATION.pdf}" download>Download PDF</a>` : ""}
+          <a class="btn primary dl" id="dl-pptx" href="${PRESENTATION.pptx}" download>${tr("Download PPTX","PPTXをダウンロード")}</a>
+          ${PRESENTATION.pdf ? `<a class="btn ghost dl" id="dl-pdf" href="${PRESENTATION.pdf}" download>${tr("Download PDF","PDFをダウンロード")}</a>` : ""}
           <span class="dl-msg" id="dl-msg" role="status"></span>
         </div>
         <div class="thumbs" id="deck-thumbs" style="padding-left:0"></div>
@@ -573,7 +671,7 @@ function initMap(){
   const setDay = d => { dayEl.textContent = Math.round(d); prog.style.width = (d / TOTAL_DAYS * 100).toFixed(1) + "%"; };
   const showStop = i => {
     const s = STOPS[i];
-    now.innerHTML = `<div class="d">${s.d} · Day ${s.day}</div><div class="pl">${s.pl}<span lang="ja">${s.k}</span></div><div class="w">${esc(s.w)}</div>`;
+    now.innerHTML = `<div class="d">${tr(`${s.d} · Day ${s.day}`,`${s.dj} · ${s.day}日目`)}</div><div class="pl">${tr(s.pl,s.k)}<span lang="${otherLang()}">${tr(s.k,s.pl)}</span></div><div class="w">${esc(tr(s.w,s.wj))}</div>`;
     items.forEach((li,k) => { li.classList.toggle("on", k === i); li.classList.toggle("done", k < i); });
     const st = stampFor(i); if (st) st.classList.remove("off");
     setDay(s.day);
@@ -587,7 +685,7 @@ function initMap(){
     });
     const [x,y] = proj(STOPS[i].lon, STOPS[i].lat); place(x,y,0,false);
     showStop(i);
-    playBtn.textContent = "▶ Play from the start";
+    playBtn.textContent = tr("▶ Play from the start","▶ 最初から再生");
   };
   const restAll = () => { /* complete state: whole route drawn, all stamps on */
     lives.forEach(p => p.style.strokeDashoffset = 0);
@@ -606,7 +704,7 @@ function initMap(){
 
   async function play(){
     const id = ++run;
-    playBtn.textContent = "↺ Replay";
+    playBtn.textContent = tr("↺ Replay","↺ もう一度再生");
     lives.forEach((p,k) => p.style.strokeDashoffset = lens[k]);
     stamps.forEach(st => st.classList.add("off"));
     const [x0,y0] = proj(STOPS[0].lon, STOPS[0].lat); place(x0,y0,0,false);
@@ -666,7 +764,7 @@ function initPetals(){
 }
 
 function face(p){
-  return `<span class="face" style="background:${p.accent}" data-photo="images/${p.slug}/profile" data-alt="${esc(p.name)}">${initials(p.name)}</span>`;
+  return `<span class="face" style="background:${p.accent}" data-photo="images/${p.slug}/profile" data-alt="${esc(displayName(p))}">${initials(p.name)}</span>`;
 }
 
 const cameraIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="3.8"/><path d="M8 7l1.5-3h5L16 7"/></svg>`;
@@ -718,22 +816,22 @@ async function initDeck(){
   if (!stage) return;
   const cnt = document.getElementById("deck-count"), th = document.getElementById("deck-thumbs");
   const prev = document.getElementById("deck-prev"), next = document.getElementById("deck-next"), full = document.getElementById("deck-full");
-  stage.innerHTML = `<div class="lb-empty">Loading slides…</div>`;
+  stage.innerHTML = `<div class="lb-empty">${tr("Loading slides…","スライドを読み込み中…")}</div>`;
   const slides = await listSlides(PRESENTATION.slidesDir);
   let i = 0;
   const show = k => {
     i = (k + slides.length) % slides.length;
-    stage.innerHTML = `<img src="${slides[i]}" alt="Slide ${i+1} of ${slides.length}">`;
-    cnt.textContent = `Slide ${i+1} / ${slides.length}`;
+    stage.innerHTML = `<img src="${slides[i]}" alt="${tr(`Slide ${i+1} of ${slides.length}`,`スライド ${i+1} / ${slides.length}`)}">`;
+    cnt.textContent = `${tr("Slide","スライド")} ${i+1} / ${slides.length}`;
     th.querySelectorAll("button").forEach((b,n) => b.classList.toggle("on", n === i));
     th.querySelector(".on")?.scrollIntoView({block:"nearest", inline:"center"});
   };
   if (!slides.length){
-    stage.innerHTML = `<div class="lb-empty">The slides will appear here.<br>In PowerPoint: <b>File → Export → Change File Type → PNG → All Slides</b>, then put the images in <code>website/${PRESENTATION.slidesDir}/</code>.</div>`;
-    cnt.textContent = "No slides yet";
+    stage.innerHTML = `<div class="lb-empty">${tr(`The slides will appear here.<br>In PowerPoint: <b>File → Export → Change File Type → PNG → All Slides</b>, then put the images in <code>website/${PRESENTATION.slidesDir}/</code>.`,`スライドはここに表示されます。<br>PowerPointで<b>ファイル → エクスポート → ファイルの種類の変更 → PNG → すべてのスライド</b>を選び、画像を<code>website/${PRESENTATION.slidesDir}/</code>に入れてください。`)}</div>`;
+    cnt.textContent = tr("No slides yet","スライドはまだありません");
     [prev,next,full].forEach(b => b.disabled = true);
   } else {
-    th.innerHTML = slides.map((u,n) => `<button type="button" aria-label="Slide ${n+1}"><img src="${u}" alt=""></button>`).join("");
+    th.innerHTML = slides.map((u,n) => `<button type="button" aria-label="${tr("Slide","スライド")} ${n+1}"><img src="${u}" alt=""></button>`).join("");
     th.querySelectorAll("button").forEach((b,n) => b.onclick = () => show(n));
     prev.onclick = () => show(i-1); next.onclick = () => show(i+1);
     stage.addEventListener("keydown", e => {
@@ -743,7 +841,7 @@ async function initDeck(){
     stage.addEventListener("click", e => { const r = stage.getBoundingClientRect(); show(e.clientX - r.left < r.width/3 ? i-1 : i+1); });
     full.onclick = async () => {
       try { document.fullscreenElement ? await document.exitFullscreen() : await stage.requestFullscreen(); stage.focus(); }
-      catch(e){ document.getElementById("dl-msg").textContent = "Full screen isn't available in this view. Try opening the page in its own browser tab."; }
+      catch(e){ document.getElementById("dl-msg").textContent = tr("Full screen isn't available in this view. Try opening the page in its own browser tab.","この画面では全画面表示を利用できません。ページを別のブラウザタブで開いてみてください。"); }
     };
     show(0);
   }
@@ -756,11 +854,11 @@ async function initDeck(){
     const url = a.getAttribute("href"), name = url.split("/").pop();
     try {
       const r = await fetch(url);
-      if (!r.ok) throw {message:`Couldn't find ${url}. Add the file to the website's presentation folder.`};
+      if (!r.ok) throw {message:tr(`Couldn't find ${url}. Add the file to the website's presentation folder.`,`${url} が見つかりません。ウェブサイトのpresentationフォルダにファイルを追加してください。`)};
       await downloadsApi.save({filename:name, data: await r.blob()});
     } catch(err){
       if (err && err.code === "declined") return;
-      msg.textContent = (err && err.message) || "The download didn't start. Try again.";
+      msg.textContent = (err && err.message) || tr("The download didn't start. Try again.","ダウンロードを開始できませんでした。もう一度お試しください。");
     }
   }));
 }
@@ -773,23 +871,24 @@ function homeView(){
     <div class="wrap">
       <section class="hero" id="top">
         <div>
-          <div class="eyebrow">AFS Japan · Oct 7 – Nov 4, 2026 · 九州Aチーム</div>
+          <div class="eyebrow">${tr("AFS Japan · Oct 7 – Nov 4, 2026","AFS日本協会 · 2026年10月7日〜11月4日")} · 九州Aチーム</div>
           <div class="title-pair">
             <span class="jp" lang="ja">未来</span>
             <span class="setu"><span class="r">setu</span><span class="hi" lang="hi">सेतु</span></span>
           </div>
-          <h1>A bridge to the future, built by eleven of us</h1>
-          <p class="lede"><em>Mirai</em> (未来) is Japanese for future and <em>setu</em> is Hindi for bridge.
-            For four weeks our group, Kyushu A, lived, interned and studied across Japan. Pick a name to see that person's Japan.</p>
+          <h1>${tr("A bridge to the future, built by eleven of us","11人でかける、未来への橋")}</h1>
+          <p class="lede">${tr(`<em>Mirai</em> (未来) is Japanese for future and <em>setu</em> is Hindi for bridge.
+            For four weeks our group, Kyushu A, lived, interned and studied across Japan. Pick a name to see that person's Japan.`,
+            `「セトゥ(setu)」はヒンディー語で「橋」という意味です。私たち九州Aチームは4週間、日本各地で暮らし、インターンシップを行い、学びました。名前を選ぶと、その人が見た日本をご覧いただけます。`)}</p>
           <div class="cta">
-            <a class="btn primary" href="#team">Meet the team →</a>
-            <a class="btn ghost" href="#journey">Watch our route</a>
+            <a class="btn primary" href="#team">${tr("Meet the team →","チームを見る →")}</a>
+            <a class="btn ghost" href="#journey">${tr("Watch our route","旅のルートを見る")}</a>
           </div>
           <div class="stats">
-            <div><b>${PEOPLE.length}</b><span>scholars</span></div>
-            <div><b>29</b><span>days in Japan</span></div>
-            <div><b>7</b><span>cities</span></div>
-            <div><b>8</b><span>internship days</span></div>
+            <div><b>${PEOPLE.length}</b><span>${tr("scholars","参加者")}</span></div>
+            <div><b>29</b><span>${tr("days in Japan","日本滞在日数")}</span></div>
+            <div><b>7</b><span>${tr("cities","都市")}</span></div>
+            <div><b>8</b><span>${tr("internship days","インターンシップ日数")}</span></div>
           </div>
         </div>
         ${emblem()}
@@ -801,16 +900,16 @@ function homeView(){
   <section class="block" id="team">
     <div class="wrap">
       <div class="sec-head">
-        <h2><span class="hanko">仲間</span>Meet Kyushu A</h2>
-        <p>One button per scholar. Each opens their own page with photos, a favourite moment and what they're taking home.</p>
+        <h2><span class="hanko">仲間</span>${tr("Meet Kyushu A","九州Aのメンバー")}</h2>
+        <p>${tr("One button per scholar. Each opens their own page with photos, a favourite moment and what they're taking home.","一人ひとりのページでは、写真や一番の思い出、日本から持ち帰るものを紹介しています。")}</p>
       </div>
       <div class="grid">
         ${PEOPLE.map(p => `
           <a class="card" href="#${p.slug}" style="--accent:${p.accent}">
             <span class="medal">${sakuraCrest(p.accent)}${face(p)}</span>
-            <span class="nm" title="${esc(p.name)}">${esc(shortName(p.name))}</span>
-            <span class="kana" lang="ja">${esc(p.kana || "")}</span>
-            <span class="go">Open page →</span>
+            <span class="nm" title="${esc(p.name)}">${esc(tr(shortName(p.name), p.kana || p.name))}</span>
+            <span class="kana" lang="${otherLang()}">${esc(tr(p.kana || "", shortName(p.name)))}</span>
+            <span class="go">${tr("Open page →","ページを見る →")}</span>
           </a>`).join("")}
       </div>
     </div>
@@ -818,70 +917,73 @@ function homeView(){
   ${journeySection()}`;
 }
 
-function personView(p){
-  const i = PEOPLE.indexOf(p);
+function personView(person){
+  const i = PEOPLE.indexOf(person);
+  const p = loc(person);
   const prev = PEOPLE[(i - 1 + PEOPLE.length) % PEOPLE.length];
   const next = PEOPLE[(i + 1) % PEOPLE.length];
-  const caps = p.captions || DEFAULT_CAPTIONS;
-  const take = p.takeaways || ["First thing I'm taking home…","Second thing…","Third thing…"];
-  const w = p.word || {k:"改善", r:"kaizen", m:"continuous improvement (example: swap in your own word)"};
+  const caps = (p.captions || DEFAULT_CAPTIONS).map(c => tr(c, CAPTION_JA[c] || c));
+  const take = p.takeaways || [tr("First thing I'm taking home…","持ち帰るもの その1…"),tr("Second thing…","その2…"),tr("Third thing…","その3…")];
+  const w = p.word || {k:"改善", r:"kaizen", m:tr("continuous improvement (example: swap in your own word)","継続的な改善(例:自分の言葉に置き換えてください)")};
   const filled = !!p.story;  /* once someone has written their page, hide empty template fields */
   const paras = t => String(t).split(/\n\n+/).map(x => `<p>${esc(x)}</p>`).join("");
   const chip = (label, val, hint) => val ? `<span class="chip"><b>${label}</b>${esc(val)}</span>` : (filled ? "" : `<span class="chip"><b>${label}</b>${ph(hint)}</span>`);
-  const chips = chip("From", p.college, "College · branch") + chip("Interned at", p.internship, "Host company") + chip("Based in", p.city, "Fukuoka / Oita / Saga");
+  const chips = chip(tr("From","所属"), p.college, tr("College · branch","大学・専攻")) + chip(tr("Interned at","インターン先"), p.internship, tr("Host company","受け入れ企業")) + chip(tr("Based in","拠点"), p.city, tr("Fukuoka / Oita / Saga","福岡 / 大分 / 佐賀"));
+  /* In English the panel heading carries a small Japanese label; in Japanese it isn't needed. */
+  const head = (jp, en, ja) => lang === "ja" ? `<h3>${ja}</h3>` : `<h3><small lang="ja">${jp}</small>${en}</h3>`;
   const kSize = w.k.length <= 3 ? 64 : w.k.length <= 5 ? 48 : w.k.length <= 7 ? 38 : 30;
 
   return `
   <div class="wrap">
     <div class="p-top">
-      <a class="btn ghost" href="#team">← All scholars</a>
-      <span class="chip">${i+1} of ${PEOPLE.length}</span>
+      <a class="btn ghost" href="#team">${tr("← All scholars","← 参加者一覧")}</a>
+      <span class="chip">${tr(`${i+1} of ${PEOPLE.length}`,`${i+1} / ${PEOPLE.length}`)}</span>
     </div>
 
     <section class="p-hero" style="--accent:${p.accent}">
       <span class="medal">${sakuraCrest(p.accent)}${face(p)}</span>
       <div>
-        <h1>${esc(p.name)}</h1>
-        <div class="kana" lang="ja">${esc(p.kana || "")}</div>
+        <h1>${esc(displayName(p))}</h1>
+        <div class="kana" lang="${otherLang()}">${esc(tr(p.kana || "", p.name))}</div>
         ${chips ? `<div class="chips">${chips}</div>` : ""}
-        ${p.tagline ? `<p class="quote">${esc(p.tagline)}</p>` : filled ? "" : `<p class="quote">${ph("One line that sums up your month in Japan.")}</p>`}
+        ${p.tagline ? `<p class="quote">${esc(p.tagline)}</p>` : filled ? "" : `<p class="quote">${ph(tr("One line that sums up your month in Japan.","日本での1か月を一言で表すと…"))}</p>`}
       </div>
     </section>
 
-    <div class="sec-head"><h2><span class="hanko">写真</span>My Japan in six photos</h2></div>
+    <div class="sec-head"><h2><span class="hanko">写真</span>${tr("My Japan in six photos","6枚の写真で見る、私の日本")}</h2></div>
     <div class="gallery">
       ${caps.slice(0,6).map((c,k) => `
         <figure>
-          <div class="pbox" data-photo="images/${p.slug}/${k+1}" data-alt="${esc(c)}"><div class="slot"><div>${cameraIcon}Add photo<br><code>images/${p.slug}/${k+1}.jpg</code></div></div></div>
+          <div class="pbox" data-photo="images/${p.slug}/${k+1}" data-alt="${esc(c)}"><div class="slot"><div>${cameraIcon}${tr("Add photo","写真を追加")}<br><code>images/${p.slug}/${k+1}.jpg</code></div></div></div>
           <figcaption>${esc(c)}</figcaption>
         </figure>`).join("")}
     </div>
 
     <div class="two" style="margin-top:28px">
       <div class="panel">
-        <h3><small lang="ja">思い出</small>My favourite moment</h3>
-        <div class="prose">${p.story ? paras(p.story) : `<p>${ph("Two or three lines about the moment you'll remember first. Where were you, who was there, what happened?")}</p>`}</div>
+        ${head("思い出","My favourite moment","一番の思い出")}
+        <div class="prose">${p.story ? paras(p.story) : `<p>${ph(tr("Two or three lines about the moment you'll remember first. Where were you, who was there, what happened?","一番心に残っている瞬間を2〜3行で。どこで、誰と、何がありましたか?"))}</p>`}</div>
       </div>
       <div class="panel">
-        <h3><small lang="ja">持ち帰るもの</small>What I'm taking home</h3>
+        ${head("持ち帰るもの","What I'm taking home","日本から持ち帰るもの")}
         <ol>${take.map(t => `<li>${p.takeaways ? esc(t) : ph(t)}</li>`).join("")}</ol>
       </div>
       <div class="panel">
-        <h3><small lang="ja">好きな言葉</small>My favourite Japanese word</h3>
+        ${head("好きな言葉","My favourite Japanese word","好きな日本語")}
         <div class="word">
           <div class="k" lang="ja" style="font-size:${kSize}px">${esc(w.k)}</div>
-          <div><div class="r">${esc(w.r)}</div><div style="color:var(--muted)">${esc(w.m)}</div></div>
+          <div>${tr(`<div class="r">${esc(w.r)}</div>`,"")}<div style="color:var(--muted)">${esc(w.m)}</div></div>
         </div>
       </div>
       <div class="panel bridge">
-        <h3><small lang="ja">架け橋</small>My bridge idea</h3>
-        <div class="prose">${p.bridgeTitle ? `<p><b>${esc(p.bridgeTitle)}</b></p>` : ""}${p.bridge ? paras(p.bridge) : `<p><span style="opacity:.8;font-style:italic">One idea to bring India and Japan closer, whether that's language, internships, a student club or a startup.</span></p>`}</div>
+        ${head("架け橋","My bridge idea","私の架け橋アイデア")}
+        <div class="prose">${p.bridgeTitle ? `<p><b>${esc(p.bridgeTitle)}</b></p>` : ""}${p.bridge ? paras(p.bridge) : `<p><span style="opacity:.8;font-style:italic">${tr("One idea to bring India and Japan closer, whether that's language, internships, a student club or a startup.","インドと日本をより近づけるアイデアを一つ。語学、インターンシップ、学生クラブ、スタートアップなど何でも。")}</span></p>`}</div>
       </div>
     </div>
 
-    <nav class="pager" aria-label="Other scholars">
-      <a href="#${prev.slug}">← Previous<b>${esc(prev.name)}</b></a>
-      <a href="#${next.slug}" style="text-align:right">Next →<b>${esc(next.name)}</b></a>
+    <nav class="pager" aria-label="${tr("Other scholars","他の参加者")}">
+      <a href="#${prev.slug}">${tr("← Previous","← 前へ")}<b>${esc(displayName(prev))}</b></a>
+      <a href="#${next.slug}" style="text-align:right">${tr("Next →","次へ →")}<b>${esc(displayName(next))}</b></a>
     </nav>
   </div>`;
 }
@@ -893,18 +995,38 @@ function route(){
   const person = PEOPLE.find(p => p.slug === h);
   if (person){
     app.innerHTML = personView(person); hydrate(app);
-    document.title = person.name + " · MIRAI-Setu 2026";
+    document.title = displayName(person) + " · MIRAI-Setu 2026";
     window.scrollTo(0,0);
   } else {
     const wasHome = app.dataset.view === "home";
     if (!wasHome){ app.innerHTML = homeView(); hydrate(app); initMap(); initPetals(); initDeck(); }
-    document.title = "MIRAI-Setu 2026 Kyushu A";
+    document.title = tr("MIRAI-Setu 2026 Kyushu A","MIRAI-Setu 2026 九州A");
     const target = h && document.getElementById(h);
     if (target) target.scrollIntoView(); else if (!wasHome) window.scrollTo(0,0);
   }
   app.dataset.view = person ? "person" : "home";
 }
+/* Text outside #app: each element carries its Japanese in data-ja. */
+function applyShell(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-ja]").forEach(el => {
+    if (!el.dataset.en) el.dataset.en = el.textContent;
+    el.textContent = tr(el.dataset.en, el.dataset.ja);
+  });
+  document.querySelector(".bar nav").setAttribute("aria-label", tr("Main","メイン"));
+  document.getElementById("lang-toggle").setAttribute("aria-label", tr("Switch to Japanese","英語に切り替える"));
+}
+document.getElementById("lang-toggle").addEventListener("click", () => {
+  const y = window.scrollY;
+  lang = otherLang();
+  try { localStorage.setItem("lang", lang); } catch(e){}
+  applyShell();
+  document.getElementById("app").dataset.view = "";
+  route();
+  window.scrollTo({top:y, behavior:"instant"});
+});
 window.addEventListener("hashchange", route);
+applyShell();
 route();
 </script>
 </body>
